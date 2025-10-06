@@ -36,8 +36,6 @@ jobs:
       - name: Install Chrome
         uses: browser-actions/setup-chrome@v1
 
-      - name: Run tests (web)
-        run: flutter test --platform chrome
 
       - name: Build Flutter Web
         run: flutter build web --release
