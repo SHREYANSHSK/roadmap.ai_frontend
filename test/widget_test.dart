@@ -1,30 +1,31 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:roadmap_ai/main.dart';
+import 'package:roadmap_ai/features/auth/presentation/screens/auth_page.dart';
+import 'package:roadmap_ai/features/auth/presentation/widgets/log_in_card.dart';
+import 'package:roadmap_ai/features/auth/presentation/widgets/sign_up_card.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  Widget createTestWidget() {
+    return const ProviderScope(
+      child: MaterialApp(
+        home: AuthPage(),
+      ),
+    );
+  }
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  testWidgets('AuthPage shows Roadmap branding', (tester) async {
+    await tester.pumpWidget(createTestWidget());
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Check if "Roadmap" text is present
+    expect(find.textContaining('Roadmap'), findsOneWidget);
+  });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  testWidgets('AuthPage shows login card by default', (tester) async {
+    await tester.pumpWidget(createTestWidget());
+
+    // Check for LogInCard widget
+    expect(find.byType(LogInCard), findsOneWidget);
+    expect(find.byType(SignUpCard), findsNothing);
   });
 }
