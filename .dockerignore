@@ -1,0 +1,9 @@
+# Avoid copying unnecessary files into the Docker image
+build
+.dart_tool
+.packages
+.pub-cache
+.idea
+*.apk
+*.iml
+*.log
